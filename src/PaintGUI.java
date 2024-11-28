@@ -1,14 +1,18 @@
 // src/PaintGUI.java
 import javax.swing.JButton;
+import javax.swing.JColorChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JToolBar;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class PaintGUI {
     private JFrame mainFrame;
     private JToolBar toolBar;
     private JPanel drawingPanel;
+    private Color currentColor = Color.BLACK;
 
     public PaintGUI() {
         mainFrame = new JFrame("Paint Application");
@@ -33,6 +37,21 @@ public class PaintGUI {
         toolBar.add(drawButton);
         JButton eraseButton = new JButton("Erase");
         toolBar.add(eraseButton);
+        //color button
+         // Bouton pour sélectionner la couleur
+        JButton colorButton = new JButton("Choose Color");
+        colorButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Ouvrir la boîte de dialogue de sélection de couleur
+                Color chosenColor = JColorChooser.showDialog(mainFrame, "Choose a Color", currentColor);
+                if (chosenColor != null) {
+                    currentColor = chosenColor; // Met à jour la couleur actuelle
+                }
+            }
+        });
+        toolBar.add(colorButton);
+
         toolBar.addSeparator();
     }
     private void initializeDrawingPanel() {
