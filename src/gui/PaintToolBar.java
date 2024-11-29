@@ -2,7 +2,9 @@
 /**
  * Toolbar containing drawing tools and color controls.
  * Includes draw/erase buttons, color chooser, and current color display.
- */package gui;
+ */
+
+ package gui;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +13,7 @@ public class PaintToolBar extends JToolBar {
     private final JPanel colorIndicator = new JPanel();
     private Color currentColor = Color.BLACK;
     private final DrawingPanel drawingPanel;
+    private ButtonGroup shapeButtons;
 
     public PaintToolBar(DrawingPanel drawingPanel) {
         this.drawingPanel = drawingPanel;
@@ -18,39 +21,37 @@ public class PaintToolBar extends JToolBar {
     }
 
     private void initializeComponents() {
-        // Boutons de base
-        add(new JButton("Draw"));
-        add(new JButton("Erase"));
-        
-        // Bouton de couleur
-        JButton colorButton = new JButton("Choose Color");
+        // Shape buttons
+        shapeButtons = new ButtonGroup();
+        addShapeButton("Freehand", ShapeType.FREEHAND);
+        addShapeButton("Rectangle", ShapeType.RECTANGLE);
+        addShapeButton("Oval", ShapeType.OVAL);
+        addShapeButton("Triangle", ShapeType.TRIANGLE);
+        addSeparator();
+
+        // Color chooser
+        JButton colorButton = new JButton("Color");
         colorButton.addActionListener(e -> {
-            Color chosenColor = JColorChooser.showDialog(this, "Choose a Color", currentColor);
+            Color chosenColor = JColorChooser.showDialog(this, "Choose Color", currentColor);
             if (chosenColor != null) {
                 currentColor = chosenColor;
-                updateColorIndicator();
+                colorIndicator.setBackground(currentColor);
                 drawingPanel.setCurrentColor(currentColor);
             }
         });
         add(colorButton);
 
-        // Configuration de l'indicateur de couleur
+        // Color indicator
         colorIndicator.setPreferredSize(new Dimension(30, 30));
-        colorIndicator.setMinimumSize(new Dimension(10, 10));
-        colorIndicator.setMaximumSize(new Dimension(10, 10));
         colorIndicator.setBackground(currentColor);
         colorIndicator.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        
-        add(Box.createHorizontalGlue());
         add(colorIndicator);
-        add(Box.createHorizontalGlue());
-        addSeparator();
     }
 
-    private void updateColorIndicator() {
-        colorIndicator.setBackground(currentColor);
-    }
-    public interface ColorChangeListener {
-        void onColorChange(Color newColor);
+    private void addShapeButton(String name, ShapeType shapeType) {
+        JToggleButton button = new JToggleButton(name);
+        button.addActionListener(e -> drawingPanel.setCurrentShape(shapeType));
+        shapeButtons.add(button);
+        add(button);
     }
 }
