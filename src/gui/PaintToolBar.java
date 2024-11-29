@@ -28,6 +28,9 @@ public class PaintToolBar extends JToolBar {
         addShapeButton("Oval", ShapeType.OVAL);
         addShapeButton("Triangle", ShapeType.TRIANGLE);
         addSeparator();
+        JButton clearButton = new JButton("Clear All");
+        clearButton.addActionListener(e -> drawingPanel.clearAll());
+        add(clearButton);
 
         // Color chooser
         JButton colorButton = new JButton("Color");

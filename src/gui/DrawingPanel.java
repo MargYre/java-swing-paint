@@ -14,7 +14,7 @@
  import java.util.ArrayList;
  import java.util.List;
  
- public class DrawingPanel extends JPanel {
+public class DrawingPanel extends JPanel {
      private Color currentColor = Color.BLACK;
      private ShapeType currentShape = ShapeType.FREEHAND;
      
@@ -49,15 +49,15 @@
              }
          });
  
-         addMouseListener(new MouseAdapter() {
-             @Override
-             public void mousePressed(MouseEvent e) {
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
                  startPoint = e.getPoint();
                  if (currentShape == ShapeType.FREEHAND) {
                      currentDrawing = new ArrayList<>();
                      currentDrawing.add(startPoint);
                  }
-             }
+            }
  
              @Override
              public void mouseReleased(MouseEvent e) {
@@ -97,7 +97,6 @@
                  drawShape(g2d, drawing.points.get(0), drawing.points.get(1), drawing.type);
              }
          }
- 
          // Draw current shape
          if (startPoint != null && endPoint != null && currentShape != ShapeType.FREEHAND) {
              drawShape(g2d, startPoint, endPoint, currentShape);
@@ -137,8 +136,14 @@
      public void setCurrentColor(Color color) {
          this.currentColor = color;
      }
- 
      public void setCurrentShape(ShapeType shapeType) {
          this.currentShape = shapeType;
      }
+     public void clearAll() {
+        allDrawings.clear();
+        currentDrawing.clear();
+        startPoint = null;
+        endPoint = null;
+        repaint();
+    }
  }
