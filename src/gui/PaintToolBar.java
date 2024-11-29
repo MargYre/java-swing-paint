@@ -46,6 +46,8 @@ public class PaintToolBar extends JToolBar {
 
         // Color indicator
         colorIndicator.setPreferredSize(new Dimension(30, 30));
+        colorIndicator.setMinimumSize(new Dimension(30, 30));
+        colorIndicator.setMaximumSize(new Dimension(30, 30));
         colorIndicator.setBackground(currentColor);
         colorIndicator.setBorder(BorderFactory.createLineBorder(Color.BLACK));
         add(colorIndicator);
