@@ -50,4 +50,7 @@ public class PaintToolBar extends JToolBar {
     private void updateColorIndicator() {
         colorIndicator.setBackground(currentColor);
     }
+    public interface ColorChangeListener {
+        void onColorChange(Color newColor);
+    }
 }
