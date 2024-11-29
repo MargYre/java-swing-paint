@@ -1,5 +1,6 @@
 // Main.java
 
+import gui.PaintGUI;
 import javax.swing.SwingUtilities;
 
 public class Main {
