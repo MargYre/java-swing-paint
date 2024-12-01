@@ -52,11 +52,21 @@ public class DrawingPanel extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                 startPoint = e.getPoint();
-                 if (currentShape == ShapeType.FREEHAND) {
-                     currentDrawing = new ArrayList<>();
-                     currentDrawing.add(startPoint);
-                 }
+                startPoint = e.getPoint();
+                if (currentShape == ShapeType.DELETE) {
+                    Point clickPoint = e.getPoint();
+                    for (int i = allDrawings.size() - 1; i >= 0; i--) {
+                        Drawing drawing = allDrawings.get(i);
+                        if (isNearShape(drawing, clickPoint)) {
+                            allDrawings.remove(i);
+                            repaint();
+                            break;
+                        }
+                    }
+                } else if (currentShape == ShapeType.FREEHAND) {
+                    currentDrawing = new ArrayList<>();
+                    currentDrawing.add(startPoint);
+                }
             }
  
              @Override
@@ -132,6 +142,25 @@ public class DrawingPanel extends JPanel {
                  break;
          }
      }
+     private boolean isNearShape(Drawing drawing, Point clickPoint) {
+        if (drawing.type == ShapeType.FREEHAND) {
+            for (Point p : drawing.points) {
+                if (clickPoint.distance(p) <= 5) {
+                    return true;
+                }
+            }
+        } else {
+            Point start = drawing.points.get(0);
+            Point end = drawing.points.get(1);
+            int x = Math.min(start.x, end.x);
+            int y = Math.min(start.y, end.y);
+            int width = Math.abs(end.x - start.x);
+            int height = Math.abs(end.y - start.y);
+            Rectangle bounds = new Rectangle(x-5, y-5, width+10, height+10);
+            return bounds.contains(clickPoint);
+        }
+        return false;
+    }
  
      public void setCurrentColor(Color color) {
          this.currentColor = color;

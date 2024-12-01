@@ -43,6 +43,7 @@ public class PaintToolBar extends JToolBar {
             }
         });
         add(colorButton);
+        addShapeButton("Delete", ShapeType.DELETE);
 
         // Color indicator
         colorIndicator.setPreferredSize(new Dimension(30, 30));

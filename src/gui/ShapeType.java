@@ -4,5 +4,6 @@ public enum ShapeType {
     FREEHAND,
     RECTANGLE,
     OVAL,
-    TRIANGLE
+    TRIANGLE,
+    DELETE
 }
